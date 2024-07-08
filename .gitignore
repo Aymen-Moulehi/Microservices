@@ -1,0 +1,5 @@
+# Project exclude paths
+/eureka/target/
+/galaxy/target/
+/planet/target/
+/.idea/
