@@ -15,6 +15,7 @@
     <module>planet</module>
     <module>galaxy</module>
     <module>eureka</module>
+      <module>gateway</module>
   </modules>
 
   <properties>
