@@ -48,6 +48,9 @@ mvn clean install
 cd ../galaxy
 mvn clean install
 cd ../planet
+mvn clean install
+cd ../gateway
+mvn clean install
 ```
 ## License
 This project is licensed under the [MIT License](LICENSE).
