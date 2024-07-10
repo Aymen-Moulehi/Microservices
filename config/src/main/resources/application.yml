@@ -1,0 +1,23 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config
+  profiles:
+    active: local,development,production
+  cloud:
+    config:
+      server:
+        git:
+          uri:
+          search-paths: server-config/
+
+management:
+  security:
+    enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
