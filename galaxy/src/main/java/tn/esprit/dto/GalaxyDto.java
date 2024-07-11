@@ -1,4 +1,4 @@
-package tn.esprit;
+package tn.esprit.dto;
 
 import tn.esprit.apiclient.planet.Planet;
 

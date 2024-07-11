@@ -4,18 +4,12 @@ server:
 spring:
   application:
     name: config
-  profiles:
-    active: local,development,production
   cloud:
     config:
       server:
         git:
-          uri:
-          search-paths: server-config/
-
-management:
-  security:
-    enabled: false
+          uri: https://github.com/Aymen-Moulehi/Microservices
+          search-paths: /setup/
 
 eureka:
   client:

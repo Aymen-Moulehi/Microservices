@@ -3,8 +3,10 @@ package tn.esprit;
 import org.springframework.stereotype.Service;
 import tn.esprit.apiclient.planet.Planet;
 import tn.esprit.apiclient.planet.PlanetClient;
+import tn.esprit.dto.GalaxyDto;
 import tn.esprit.error.ErrorCode;
 import tn.esprit.error.exception.ClientSideCustomException;
+import tn.esprit.query.GalaxyAddingRequest;
 
 import java.util.List;
 import java.util.Optional;

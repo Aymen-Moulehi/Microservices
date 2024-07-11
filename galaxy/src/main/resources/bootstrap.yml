@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: development
+  cloud:
+    config:
+      uri: http://localhost:8888
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
