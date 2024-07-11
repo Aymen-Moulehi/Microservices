@@ -45,6 +45,8 @@ Navigate to each microservice directory and build the project using Maven:
 ```bash
 cd eureka
 mvn clean install
+cd ../config
+mvn clean install
 cd ../galaxy
 mvn clean install
 cd ../planet
