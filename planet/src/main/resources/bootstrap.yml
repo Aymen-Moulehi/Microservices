@@ -3,7 +3,11 @@ spring:
     active: development
   cloud:
     config:
-      uri: http://localhost:8888
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      enabled: true
+
 management:
   security:
     enabled: false
