@@ -7,17 +7,22 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import tn.esprit.dto.GalaxyDto;
 import tn.esprit.error.ErrorEntity;
 import tn.esprit.error.ErrorHandler;
 import tn.esprit.query.GalaxyAddingRequest;
 import tn.esprit.query.ServiceInfoResponse;
 
+import java.util.Objects;
+
 
 @RestController
 @RequestMapping("/api/v1/galaxies")
 @AllArgsConstructor
 @RefreshScope
+@SuppressWarnings("unused")
 public class GalaxyController {
     private final GalaxyService galaxyService;
     private final Environment env;
@@ -43,7 +48,8 @@ public class GalaxyController {
     @GetMapping("/with-planets/{galaxyId}")
     @CircuitBreaker(name = "getGalaxyByIdWithRelatedPlanets", fallbackMethod = "handleGalaxyControllerError")
     public ResponseEntity<GalaxyDto> getGalaxyByIdWithRelatedPlanets(@PathVariable("galaxyId") int galaxyId) {
-        return new ResponseEntity<>(galaxyService.getGalaxyByIdWithRelatedPlanets(galaxyId), HttpStatus.ACCEPTED);
+        String token = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest().getHeader("Authorization");
+        return new ResponseEntity<>(galaxyService.getGalaxyByIdWithRelatedPlanets(galaxyId, token), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/info")

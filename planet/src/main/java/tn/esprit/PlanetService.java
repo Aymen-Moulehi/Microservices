@@ -13,8 +13,8 @@ import java.util.Optional;
 
 @Service
 public record PlanetService(PlanetRepository planetRepository, GalaxyService galaxyService) {
-    public Planet addPlanet(PlanetAddingRequest planetAddingRequest) {
-        if (!galaxyService().isExistGalaxy(planetAddingRequest.galaxyId())) {
+    public Planet addPlanet(PlanetAddingRequest planetAddingRequest, String token) {
+        if (!galaxyService().isExistGalaxy(planetAddingRequest.galaxyId(), token)) {
             throw new ClientSideCustomException(
                     "Galaxy with id " + planetAddingRequest.galaxyId() + " not found",
                     ErrorCode.GALAXY_NOT_FOUND.getCode()
@@ -28,7 +28,7 @@ public record PlanetService(PlanetRepository planetRepository, GalaxyService gal
         return planetRepository.save(planet);
     }
 
-    public PlanetDto getPlanetById(int planetId) {
+    public PlanetDto getPlanetById(int planetId, String token) {
         Optional<Planet> planetOptional = planetRepository
                 .findById(planetId);
         if (planetOptional.isEmpty()) {
@@ -38,7 +38,7 @@ public record PlanetService(PlanetRepository planetRepository, GalaxyService gal
             );
         }
         Planet planet = planetOptional.get();
-        Galaxy galaxy = galaxyService.getGalaxyById(planet.getGalaxyId());
+        Galaxy galaxy = galaxyService.getGalaxyById(planet.getGalaxyId(), token);
         return new PlanetDto(planetId, planet.getName(), planet.getMass(), galaxy);
     }
 

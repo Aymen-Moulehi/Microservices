@@ -39,11 +39,11 @@ public record GalaxyService(GalaxyRepository galaxyRepository, PlanetClient plan
         return galaxyOptional.get();
     }
 
-    public GalaxyDto getGalaxyByIdWithRelatedPlanets(int galaxyId) {
+    public GalaxyDto getGalaxyByIdWithRelatedPlanets(int galaxyId, String token) {
         Galaxy galaxy = getGalaxyById(galaxyId);
         List<Planet> planets;
         try {
-            planets = planetClient.getPlanetsByGalaxyId(galaxyId).getBody();
+            planets = planetClient.getPlanetsByGalaxyId(galaxyId, token).getBody();
         } catch (Exception e) {
             throw new ClientSideCustomException(
                     "Error while calling the Planet microservice",
