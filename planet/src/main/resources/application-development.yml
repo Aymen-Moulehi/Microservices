@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: # todo change the URL jdbc:postgresql://localhost:5432/planet
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: # todo change the URL http://localhost:8080/realms/Universe
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  kafka:
+    bootstrap-servers: # todo change the URL localhost:9092
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: # todo change the URL http://localhost:8761/eureka/
+
+galaxy-microservice-url: # todo change the URL http://GALAXY/api/v1/galaxies

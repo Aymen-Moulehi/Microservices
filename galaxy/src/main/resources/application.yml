@@ -3,14 +3,23 @@ server:
 spring:
   application:
     name: galaxy
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/galaxy
-    username: root
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
     password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    platform: h2
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: create-drop
     show-sql: true
@@ -20,25 +29,14 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/Universe
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
-
+  kafka:
+    bootstrap-servers: localhost:9092
 
 management:
   endpoints.web.exposure.include:
     - '*'
   endpoint.health.show-details: always
   health.circuitbreakers.enabled: true
-
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      registerHealthIndicator: true
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 5
-      permittedNumberOfCallsInHalfOpenState: 3
-      automaticTransitionFromOpenToHalfOpenEnabled: true
-      waitDurationInOpenState: 5s
-      failureRateThreshold: 50
-      eventConsumerBufferSize: 10
 
 eureka:
   client:

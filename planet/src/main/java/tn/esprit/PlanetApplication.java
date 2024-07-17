@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @AllArgsConstructor
+@SuppressWarnings("unused")
 public class PlanetApplication {
 
     private final PlanetRepository planetRepository;

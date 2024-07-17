@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import tn.esprit.broker.producer.galaxy.GalaxySender;
 import tn.esprit.dto.GalaxyDto;
 import tn.esprit.error.ErrorEntity;
 import tn.esprit.error.ErrorHandler;
@@ -26,11 +27,14 @@ import java.util.Objects;
 public class GalaxyController {
     private final GalaxyService galaxyService;
     private final Environment env;
+    private GalaxySender galaxySender;
 
     @PostMapping
     @CircuitBreaker(name = "addGalaxy", fallbackMethod = "handleGalaxyControllerError")
     public ResponseEntity<Galaxy> addGalaxy(@RequestBody GalaxyAddingRequest galaxyAddingRequest) {
-        return new ResponseEntity<>(galaxyService.addGalaxy(galaxyAddingRequest), HttpStatus.ACCEPTED);
+        Galaxy galaxy = galaxyService.addGalaxy(galaxyAddingRequest);
+        galaxySender.publish(galaxy.getName(), galaxy.getId().intValue());
+        return new ResponseEntity<>(galaxy, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/{galaxyId}")
