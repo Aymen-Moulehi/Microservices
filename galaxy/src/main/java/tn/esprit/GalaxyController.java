@@ -57,6 +57,7 @@ public class GalaxyController {
     }
 
     @GetMapping("/info")
+    @RefreshScope
     @CircuitBreaker(name = "getServiceInfo", fallbackMethod = "handleGalaxyControllerError")
     public ResponseEntity<ServiceInfoResponse> getServiceInfo() {
         String serviceName = env.getProperty("service-name");

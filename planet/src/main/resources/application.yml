@@ -3,44 +3,31 @@ server:
 spring:
   application:
     name: planet
-  cloud:
-    config:
-      discovery:
-        enabled: true
-        service-id: CONFIG
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
+    url: jdbc:postgresql://postgres:5432/planet
+    username: root
     password: password
-    platform: h2
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   jpa:
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
     show-sql: true
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/Universe
+          issuer-uri: http://keycloak:8080/realms/Universe
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: kafka:9092
+
+galaxy-microservice-url: http://GALAXY/api/v1/galaxies
 
 management:
   endpoints.web.exposure.include:
     - '*'
   endpoint.health.show-details: always
   health.circuitbreakers.enabled: true
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-
-galaxy-microservice-url: http://GALAXY/api/v1/galaxies

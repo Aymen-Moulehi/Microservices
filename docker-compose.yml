@@ -35,6 +35,7 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: keycloak
     command: start-dev
     volumes:
       - keycloak_data:/opt/keycloak/data
@@ -56,28 +57,27 @@ services:
       - "2181:2181"
     networks:
       - backend
-    restart: unless-stopped
 
   kafka:
-    container_name: kafka
     image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - kafka:/var/lib/kafka
     ports:
       - "9092:9092"
     networks:
       - backend
-    depends_on:
-      - zookeeper
-    restart: unless-stopped
 
   eureka:
+    container_name: eureka
     build:
       context: ./eureka
       dockerfile: Dockerfile
@@ -89,6 +89,7 @@ services:
       - backend
 
   config:
+    container_name: config
     build:
       context: ./config
       dockerfile: Dockerfile
@@ -102,6 +103,7 @@ services:
       - backend
 
   gateway:
+    container_name: gateway
     build:
       context: ./gateway
       dockerfile: Dockerfile
@@ -115,6 +117,7 @@ services:
       - backend
 
   galaxy:
+    container_name: galaxy
     build:
       context: ./galaxy
       dockerfile: Dockerfile
@@ -131,6 +134,7 @@ services:
       - backend
 
   planet:
+    container_name: planet
     build:
       context: ./planet
       dockerfile: Dockerfile
@@ -149,7 +153,6 @@ services:
 networks:
   backend:
     driver: bridge
-
 
 volumes:
   mysql:

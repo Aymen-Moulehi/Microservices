@@ -2,6 +2,7 @@ package tn.esprit;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class PlanetController {
     }
 
     @GetMapping("/info")
+    @RefreshScope
     @CircuitBreaker(name = "getServiceInfo", fallbackMethod = "handlePlanetControllerError")
     public ResponseEntity<ServiceInfoResponse> getServiceInfo() {
         String serviceName = env.getProperty("service-name");

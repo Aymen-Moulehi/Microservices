@@ -1,2 +1,0 @@
-service-name: Galaxy
-description: "Galaxy is a microservice designed to manage and interact with galaxy data within our application ecosystem. It provides endpoints for adding, retrieving, and checking the existence of galaxies, as well as fetching detailed galaxy information along with related planetary data. Utilizing the Circuit Breaker pattern for resilience, StellarService ensures high availability and fault tolerance. This service is essential for astronomical data management, facilitating seamless integration and real-time updates through Spring Cloud Config."
