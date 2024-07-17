@@ -64,35 +64,92 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
     volumes:
       - kafka:/var/lib/kafka
     ports:
       - "9092:9092"
-      - "9093:9093"
     networks:
       - backend
     depends_on:
       - zookeeper
     restart: unless-stopped
 
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    depends_on:
-      - kafka
+  eureka:
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
     ports:
-      - 8090:8080
+      - "8761:8761"
     environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      - spring.profiles.active=dev
     networks:
       - backend
+
+  config:
+    build:
+      context: ./config
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka
+    environment:
+      - spring.profiles.active=dev
+    networks:
+      - backend
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - eureka
+    environment:
+      - spring.profiles.active=dev
+    networks:
+      - backend
+
+  galaxy:
+    build:
+      context: ./galaxy
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka
+      - mysql
+      - keycloak
+      - kafka
+    environment:
+      - spring.profiles.active=dev
+    networks:
+      - backend
+
+  planet:
+    build:
+      context: ./planet
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka
+      - postgres
+      - keycloak
+      - kafka
+    environment:
+      - spring.profiles.active=dev
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
+
 
 volumes:
   mysql:
