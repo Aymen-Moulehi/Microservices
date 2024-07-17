@@ -2,7 +2,7 @@
 
 # Microservices with Spring Boot Project
 ![Static Badge](https://img.shields.io/badge/License-MIT-blue)
-![Static Badge](https://img.shields.io/badge/Java-17-green)
+![Static Badge](https://img.shields.io/badge/Java-18-green)
 ![Static Badge](https://img.shields.io/badge/Maven-3.9.8-green)
 ![Static Badge](https://img.shields.io/badge/Spring_Boot-3.3.1-green)
 ## Project Overview
