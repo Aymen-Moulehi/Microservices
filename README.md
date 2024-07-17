@@ -34,12 +34,6 @@ git clone https://github.com/Aymen-Moulehi/Microservices.git
 cd microservices-springboot
 ```
 
-### Build and Run the Docker Containers
-From the root directory of the project, run:
-```bash
-docker-compose up --build
-```
-
 ### Build the Project
 Navigate to each microservice directory and build the project using Maven:
 ```bash
@@ -54,6 +48,14 @@ mvn clean install
 cd ../gateway
 mvn clean install
 ```
+
+### Build and Run the Docker Containers
+From the root directory of the project, run:
+```bash
+docker-compose up --build
+```
+
+
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
