@@ -4,7 +4,7 @@ spring:
   application:
     name: planet
   datasource:
-    url: jdbc:postgresql://postgres:5432/planet
+    url: jdbc:postgresql://localhost:5432/planet
     username: root
     password: password
   jpa:
@@ -19,10 +19,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/Universe
+          issuer-uri: http://localhost:8080/realms/Universe
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: localhost:29092
 
 galaxy-microservice-url: http://GALAXY/api/v1/galaxies
 

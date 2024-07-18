@@ -4,7 +4,7 @@ spring:
   application:
     name: galaxy
   datasource:
-    url: jdbc:mysql://mysql:3306/galaxy
+    url: jdbc:mysql://localhost:3306/galaxy
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,15 +17,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/Universe
+          issuer-uri: http://localhost:8080/realms/Universe
           jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   kafka:
-    bootstrap-servers: kafka:9092
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://eureka:8761/eureka/
+    bootstrap-servers: localhost:29092
 
 management:
   endpoints.web.exposure.include:

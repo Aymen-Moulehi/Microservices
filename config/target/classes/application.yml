@@ -10,7 +10,6 @@ spring:
         git:
           uri: https://github.com/Aymen-Moulehi/Microservices
           search-paths: /setup/
-
 eureka:
   client:
     serviceUrl:
