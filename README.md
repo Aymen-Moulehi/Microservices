@@ -11,7 +11,7 @@ This project is a comprehensive demonstration of building a microservices archit
 
 ## Technologies and Tools Used
 
-- Programming Language: Java 17
+- Programming Language: Java 18
 - Framework: Spring Boot 3.3.1
 - Build Tool: Maven 3.9.8
 - Containerization: Docker, Docker Compose
