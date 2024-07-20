@@ -8,7 +8,9 @@ public enum ErrorCode {
     PLANET_NOT_FOUND(1001),
     CALLING_GALAXY_SERVER(1002),
     GALAXY_NOT_FOUND(1003),
-    GALAXY_UNAUTHORIZED(1004);
+    GALAXY_NULL_NAME(1004),
+    CALLING_PLANET_SERVER(1005),
+    GALAXY_UNAUTHORIZED(1006);
     private final int code;
 
     ErrorCode(int code) {
